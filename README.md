@@ -1,8 +1,8 @@
 # NITROMINIDASH
-# Car Racing Nitro - Unity 2D Game
+# Car Racing Nitro
 
 ## Description
-Car Racing Nitro is a simple 2D racing game built in Unity where the player controls a car, maneuvers around a track, and uses a nitro boost to increase speed temporarily.
+Car Racing Nitro is a simple 2D racing game where the player controls a car, maneuvers around a track, and uses a nitro boost to increase speed temporarily.
 
 ## Features
 - Basic forward and turning controls
