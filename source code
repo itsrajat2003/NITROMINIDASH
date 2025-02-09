@@ -1,0 +1,73 @@
+import pygame
+import sys
+import random
+import time
+
+# Initialize pygame
+pygame.init()
+
+# Screen settings
+WIDTH, HEIGHT = 800, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("2D Car Racing with Nitro")
+
+# Colors
+WHITE = (255, 255, 255)
+
+# Load car image safely
+try:
+    car_img = pygame.image.load("car.png")
+    car_img = pygame.transform.scale(car_img, (275, 183))
+except pygame.error:
+    print("Error: Car image file not found.")
+    sys.exit()
+
+# Car settings
+car_x, car_y = WIDTH // 2, HEIGHT - 120
+car_speed = 5
+nitro_active = False
+nitro_multiplier = 2
+nitro_duration = 2000  # in milliseconds
+
+clock = pygame.time.Clock()
+nitro_time = 0
+
+# Delay exit for 10 seconds at the start
+start_time = time.time()
+running = True
+
+while running:
+    screen.fill(WHITE)
+    
+    # Get elapsed time
+    elapsed_time = time.time() - start_time
+    
+    # Random movement logic
+    move_direction = random.choice([(0, -1), (0, 1), (-1, 0), (1, 0)])  # Up, Down, Left, Right
+    car_x += move_direction[0] * car_speed
+    car_y += move_direction[1] * car_speed
+    
+    # Nitro boost logic
+    current_speed = car_speed * nitro_multiplier if nitro_active else car_speed
+    
+    # Prevent exit in first 10 seconds
+    if elapsed_time > 10:
+        # Check for boundary collision
+        if car_x < 0 or car_x + 275 > WIDTH or car_y < 0 or car_y + 183 > HEIGHT:
+            print("Game Over: Car hit the boundary!")
+            running = False
+    
+    # Draw car only if image is loaded
+    if 'car_img' in locals():
+        screen.blit(car_img, (car_x, car_y))
+    
+    pygame.display.update()
+    
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+    
+    clock.tick(60)
+
+pygame.quit()
+sys.exit()
